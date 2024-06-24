@@ -1,8 +1,5 @@
 import streamlit as st
 import pandas as pd
-import pytz
-import os
-from pathlib import Path
 from pytz import timezone
 
 def utc_to_est_bulk(df):      
@@ -74,7 +71,7 @@ def main():
     if uploaded_files:
         for uploaded_file in uploaded_files:
             df = pd.read_csv(uploaded_file)
-            original_filename = os.path.splitext(uploaded_file.name)[0]
+            original_filename = uploaded_file.name.split(".")[0]
 
             st.write(f"### Original Data for {uploaded_file.name}")
             st.write(df.head())
