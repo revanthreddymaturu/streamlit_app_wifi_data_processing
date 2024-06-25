@@ -22,6 +22,7 @@ def bulk_pm25_correction(df):
     # Rearrange columns
     columns_order = list(df.columns)
     columns_order.insert(columns_order.index('pm2.5_atm') + 1, 'pm2.5_corr')
+    columns_order = [col for col in columns_order if col in df.columns]
     df = df.reindex(columns=columns_order)
     return df
 
