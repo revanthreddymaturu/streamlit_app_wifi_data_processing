@@ -69,6 +69,7 @@ def main():
     
     if uploaded_files:
         processed_files = []
+        processed_files_daily = []
         for uploaded_file in uploaded_files:
             df = pd.read_csv(uploaded_file)
             original_filename = uploaded_file.name.split(".")[0]
@@ -88,7 +89,7 @@ def main():
            
 
             # Step 4: Continuous Range Days Wifi Bulk
-            df = continuous_range_days_wifi_bulk(df)
+            df_daily = continuous_range_days_wifi_bulk(df)
             # st.write(f"### Final Data Preview for {uploaded_file.name}")
             # st.write(df.head())
             
@@ -97,15 +98,20 @@ def main():
             # st.write(f"### After Filtering Data to Specified Date Range for {uploaded_file.name}")
             # st.write(df.head())
 
-            processed_filename = f"{original_filename}_processed_data.csv"
+            processed_filename = f"{original_filename}_processed_data_hourly.csv"
             processed_files.append((processed_filename, df.to_csv(index=False)))
+            processed_filename_daily = f"{original_filename}_processed_data_daily.csv"
+            processed_files_daily.append((processed_filename_daily, df_daily.to_csv(index=False)))
 
-            st.download_button(f"Download Processed Data for {uploaded_file.name}", df.to_csv(index=False), processed_filename)
+            st.download_button(f"Download Processed Hourly Data for {uploaded_file.name}", df.to_csv(index=False), processed_filename)
+            st.download_button(f"Download Processed Daily Data for {uploaded_file.name}", df_daily.to_csv(index=False), processed_filename_daily)
 
         # Create a ZIP file in memory
         zip_buffer = BytesIO()
         with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
             for filename, data in processed_files:
+                zip_file.writestr(filename, data)
+            for filename, data in processed_files_daily:
                 zip_file.writestr(filename, data)
         
         # Ensure the buffer is ready for reading
