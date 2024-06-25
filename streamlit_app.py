@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 from pytz import timezone
+import zipfile
+from io import BytesIO
+
 
 def utc_to_est_bulk(df):      
     # Convert the timestamp column to datetime type
@@ -65,6 +68,7 @@ def main():
     uploaded_files = st.file_uploader("Upload your CSV files", type=["csv"], accept_multiple_files=True)
     
     if uploaded_files:
+        processed_files = []
         for uploaded_file in uploaded_files:
             df = pd.read_csv(uploaded_file)
             original_filename = uploaded_file.name.split(".")[0]
@@ -94,7 +98,26 @@ def main():
             # st.write(df.head())
 
             processed_filename = f"{original_filename}_processed_data.csv"
+            processed_files.append((processed_filename, df.to_csv(index=False)))
+
             st.download_button(f"Download Processed Data for {uploaded_file.name}", df.to_csv(index=False), processed_filename)
+
+        # Create a ZIP file in memory
+        zip_buffer = BytesIO()
+        with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+            for filename, data in processed_files:
+                zip_file.writestr(filename, data)
+        
+        # Ensure the buffer is ready for reading
+        zip_buffer.seek(0)
+
+        # Provide the download button for the ZIP file
+        st.download_button(
+            label="Download All Processed Files",
+            data=zip_buffer,
+            file_name="processed_files.zip",
+            mime="application/zip"
+        )
 
 if __name__ == "__main__":
     main()
