@@ -85,8 +85,8 @@ def main():
 
             # Step 4: Continuous Range Days Wifi Bulk
             df = continuous_range_days_wifi_bulk(df)
-            st.write(f"### Final Data Preview for {uploaded_file.name}")
-            st.write(df.head())
+            # st.write(f"### Final Data Preview for {uploaded_file.name}")
+            # st.write(df.head())
             
             # # Step 5: Filter Data to Specified Date Range
             # df = filter_data_to_specified_date_range(df)
