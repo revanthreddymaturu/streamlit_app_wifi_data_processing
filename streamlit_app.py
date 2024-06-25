@@ -15,10 +15,6 @@ def bulk_pm25_correction(df):
     # Calculate pm2.5_corr column
     df['pm2.5_corr'] = (0.524 * df['pm2.5_atm']) - (0.0862 * df['humidity']) + 5.75
     
-    # Rearrange columns
-    columns_order = list(df.columns)
-    columns_order.insert(columns_order.index('pm2.5_atm') + 1, 'pm2.5_corr')
-    df = df.reindex(columns=columns_order)
     return df
 
 def continuous_range_hourly_wifi_bulk(df):
