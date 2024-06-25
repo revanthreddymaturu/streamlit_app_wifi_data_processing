@@ -113,7 +113,7 @@ def main():
 
         # Provide the download button for the ZIP file
         st.download_button(
-            label="Download All Processed Files",
+            label="Download All Processed Files as ZIP",
             data=zip_buffer,
             file_name="processed_files.zip",
             mime="application/zip"
