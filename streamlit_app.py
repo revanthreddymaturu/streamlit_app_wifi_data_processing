@@ -68,22 +68,28 @@ def main():
         for uploaded_file in uploaded_files:
             df = pd.read_csv(uploaded_file)
             original_filename = uploaded_file.name.split(".")[0]
-
+            st.write(f"### Original Data for {uploaded_file.name}")
+            st.write(df.head())
            
             # Step 1: UTC to EST Bulk
             df = utc_to_est_bulk(df)
-           
+            st.write(f"### After UTC to EST Conversion for {uploaded_file.name}")
+            st.write(df.head())
 
             # Step 2: Bulk PM2.5 Correction
             df = bulk_pm25_correction(df)
-            
+            st.write(f"### After PM2.5 Correction for {uploaded_file.name}")
+            st.write(df.head())
 
             # Step 3: Continuous Range Hourly Wifi Bulk
             df = continuous_range_hourly_wifi_bulk(df)
-            
+            st.write(f"### After Continuous Range Hourly Wifi Bulk for {uploaded_file.name}")
+            st.write(df.head())
 
             # Step 4: Continuous Range Days Wifi Bulk
             df = continuous_range_days_wifi_bulk(df)
+            st.write(f"### After Continuous Range Days Wifi Bulk for {uploaded_file.name}")
+            st.write(df.head())
             
             # # Step 5: Filter Data to Specified Date Range
             # df = filter_data_to_specified_date_range(df)
