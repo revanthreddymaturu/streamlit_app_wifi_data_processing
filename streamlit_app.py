@@ -68,8 +68,8 @@ def main():
         for uploaded_file in uploaded_files:
             df = pd.read_csv(uploaded_file)
             original_filename = uploaded_file.name.split(".")[0]
-            st.write(f"### Original Data for {uploaded_file.name}")
-            st.write(df.head())
+            # st.write(f"### Original Data for {uploaded_file.name}")
+            # st.write(df.head())
            
             # Step 1: UTC to EST Bulk
             df = utc_to_est_bulk(df)
