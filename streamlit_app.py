@@ -6,7 +6,7 @@ from io import BytesIO
 
 def utc_to_est_bulk(df):      
     # Convert the timestamp column to datetime type
-    df['time_stamp'] = pd.to_datetime(df['time_stamp'])
+    df['time_stamp'] = pd.to_datetime(df['time_stamp'],utc=True)
         
     # Convert the timestamp column to Eastern Standard Time (EST)
     df['time_stamp'] = df['time_stamp'].dt.tz_convert('America/New_York')
