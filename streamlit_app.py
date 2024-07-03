@@ -67,7 +67,7 @@ def continuous_range_days_wifi_bulk(df):
     # return daily_df
 
 def main():
-    st.title('PurpleAir Wifi Data Processing App')
+    st.title('PurpleAir Wifi Data Processing Tool')
 
     uploaded_files = st.file_uploader("Upload your CSV files", type=["csv"], accept_multiple_files=True)
     
