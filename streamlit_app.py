@@ -16,6 +16,8 @@ def utc_to_est_bulk(df):
 def bulk_pm25_correction(df): 
     # Calculate pm2.5_corr column
     df['pm2.5_corr'] = (0.524 * df['pm2.5_atm']) - (0.0862 * df['humidity']) + 5.75
+    # Discard rows where pm2.5_atm is greater than 500
+    df = df[df['pm2.5_atm'] <= 500]
     
     return df
 
